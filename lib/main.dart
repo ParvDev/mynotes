@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:mynotes/home_page.dart';
+import 'package:mynotes/views/login_view.dart';
+import 'package:mynotes/views/register_view.dart';
+import 'home_page.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -16,8 +18,13 @@ class MyNotes extends StatelessWidget {
       title: 'My Notes',
       theme: ThemeData(
         brightness: Brightness.dark,
+        primarySwatch: Colors.teal,
       ),
       home: const HomePage(),
+      routes: {
+        '/login/': (context) => const LoginView(),
+        '/register/': (context) => const RegisterView(),
+      },
     );
   }
 }

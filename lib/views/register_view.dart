@@ -5,6 +5,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:mynotes/constants/routes.dart';
 
+import '../utilities/show__dialog.dart';
+
 class RegisterView extends StatefulWidget {
   const RegisterView({Key? key}) : super(key: key);
 
@@ -89,12 +91,31 @@ class _RegisterViewState extends State<RegisterView> {
                   devtools.log(userCredential.toString());
                 } on FirebaseAuthException catch (e) {
                   if (e.code == 'weak-password') {
-                    devtools.log('Weak password');
+                    await showErrorDialog(
+                      context,
+                      'Weak password!',
+                    );
                   } else if (e.code == 'email-already-in-use') {
-                    devtools.log("email is already in use");
+                    await showErrorDialog(
+                      context,
+                      "User already exist!",
+                    );
                   } else if (e.code == 'invalid-email') {
-                    devtools.log("Invalid email address");
+                    await showErrorDialog(
+                      context,
+                      "Invalid Email address",
+                    );
+                  } else {
+                    await showErrorDialog(
+                      context,
+                      'Error: ${e.code}',
+                    );
                   }
+                } catch (e) {
+                  await showErrorDialog(
+                    context,
+                    e.toString(),
+                  );
                 }
               },
               child: const Text(

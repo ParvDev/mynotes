@@ -1,5 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+
+import '../constants/routes.dart';
 
 class VerifyEmailView extends StatefulWidget {
   const VerifyEmailView({Key? key}) : super(key: key);
@@ -11,17 +14,29 @@ class VerifyEmailView extends StatefulWidget {
 class _VerifyEmailViewState extends State<VerifyEmailView> {
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        const Text('Please verify your email address'),
-        TextButton(
-          onPressed: () async {
-            final user = FirebaseAuth.instance.currentUser;
-            await user?.sendEmailVerification();
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Verify email'),
+        leading: IconButton(
+          icon: const Icon(CupertinoIcons.left_chevron),
+          onPressed: () {
+            Navigator.of(context)
+                .pushNamedAndRemoveUntil(loginRoute, (route) => false);
           },
-          child: const Text('Send Email verification'),
-        )
-      ],
+        ),
+      ),
+      body: Column(
+        children: [
+          const Text('Please verify your email address'),
+          TextButton(
+            onPressed: () async {
+              final user = FirebaseAuth.instance.currentUser;
+              await user?.sendEmailVerification();
+            },
+            child: const Text('Send Email verification'),
+          )
+        ],
+      ),
     );
   }
 }

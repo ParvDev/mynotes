@@ -5,7 +5,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:mynotes/constants/routes.dart';
 
-import '../utilities/show__dialog.dart';
+import '../utilities/show_error_dialog.dart';
 
 class RegisterView extends StatefulWidget {
   const RegisterView({Key? key}) : super(key: key);
@@ -83,12 +83,13 @@ class _RegisterViewState extends State<RegisterView> {
                 final email = _email.text;
                 final password = _password.text;
                 try {
-                  final userCredential = await FirebaseAuth.instance
-                      .createUserWithEmailAndPassword(
+                  await FirebaseAuth.instance.createUserWithEmailAndPassword(
                     email: email,
                     password: password,
                   );
-                  devtools.log(userCredential.toString());
+                  final user = FirebaseAuth.instance.currentUser;
+                  await user?.sendEmailVerification();
+                  Navigator.of(context).pushNamed(verifyEmailRoute);
                 } on FirebaseAuthException catch (e) {
                   if (e.code == 'weak-password') {
                     await showErrorDialog(

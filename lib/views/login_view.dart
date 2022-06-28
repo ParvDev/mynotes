@@ -1,7 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:mynotes/firebase_options.dart';
 
 class LoginView extends StatefulWidget {
   const LoginView({Key? key}) : super(key: key);
@@ -34,8 +33,16 @@ class _LoginViewState extends State<LoginView> {
       appBar: AppBar(
         title: const Text('Login'),
       ),
-      body: Column(
+      body: ListView(
         children: [
+          const Icon(
+            CupertinoIcons.profile_circled,
+            size: 300,
+            color: Colors.grey,
+          ),
+          const SizedBox(
+            height: 20,
+          ),
           TextField(
             controller: _email,
             enableSuggestions: false,
@@ -43,6 +50,7 @@ class _LoginViewState extends State<LoginView> {
             keyboardType: TextInputType.emailAddress,
             decoration: const InputDecoration(
               hintText: 'Enter your email here',
+              contentPadding: EdgeInsets.all(20),
             ),
           ),
           TextField(
@@ -52,10 +60,11 @@ class _LoginViewState extends State<LoginView> {
             autocorrect: false,
             decoration: const InputDecoration(
               hintText: 'Enter your password here',
+              contentPadding: EdgeInsets.all(20),
             ),
           ),
           const SizedBox(
-            height: 10,
+            height: 30,
           ),
           TextButton(
             onPressed: () async {

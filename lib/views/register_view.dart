@@ -32,16 +32,24 @@ class _RegisterViewState extends State<RegisterView> {
       appBar: AppBar(
         title: const Text('Sign Up'),
       ),
-      body: Column(
+      body: ListView(
         children: [
+          const Icon(
+            Icons.app_registration_rounded,
+            size: 300,
+            color: Colors.grey,
+          ),
+          const SizedBox(
+            height: 20.0,
+          ),
           TextField(
             controller: _email,
             enableSuggestions: false,
             autocorrect: false,
             keyboardType: TextInputType.emailAddress,
             decoration: const InputDecoration(
-              hintText: 'Enter your email here',
-            ),
+                hintText: 'Enter your email here',
+                contentPadding: EdgeInsets.all(20)),
           ),
           TextField(
             controller: _password,
@@ -50,10 +58,11 @@ class _RegisterViewState extends State<RegisterView> {
             autocorrect: false,
             decoration: const InputDecoration(
               hintText: 'Enter your password here',
+              contentPadding: EdgeInsets.all(20),
             ),
           ),
           const SizedBox(
-            height: 10,
+            height: 20.0,
           ),
           TextButton(
             onPressed: () async {

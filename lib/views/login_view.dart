@@ -1,6 +1,9 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'dart:developer' as devtools show log;
 
 class LoginView extends StatefulWidget {
   const LoginView({Key? key}) : super(key: key);
@@ -33,81 +36,83 @@ class _LoginViewState extends State<LoginView> {
       appBar: AppBar(
         title: const Text('Login'),
       ),
-      body: ListView(
-        children: [
-          const Icon(
-            CupertinoIcons.profile_circled,
-            size: 300,
-            color: Colors.grey,
-          ),
-          const SizedBox(
-            height: 20,
-          ),
-          TextField(
-            controller: _email,
-            enableSuggestions: false,
-            autocorrect: false,
-            keyboardType: TextInputType.emailAddress,
-            decoration: const InputDecoration(
-              hintText: 'Enter your email here',
-              contentPadding: EdgeInsets.all(20),
+      body: Padding(
+        padding: const EdgeInsets.all(20.0),
+        child: ListView(
+          children: [
+            const Icon(
+              CupertinoIcons.profile_circled,
+              size: 300,
+              color: Colors.grey,
             ),
-          ),
-          TextField(
-            controller: _password,
-            obscureText: true,
-            enableSuggestions: false,
-            autocorrect: false,
-            decoration: const InputDecoration(
-              hintText: 'Enter your password here',
-              contentPadding: EdgeInsets.all(20),
+            const SizedBox(
+              height: 20,
             ),
-          ),
-          const SizedBox(
-            height: 30,
-          ),
-          TextButton(
-            onPressed: () async {
-              final email = _email.text;
-              final password = _password.text;
-              try {
-                final userCredential =
-                    await FirebaseAuth.instance.signInWithEmailAndPassword(
-                  email: email,
-                  password: password,
-                );
-                print(userCredential);
-              } on FirebaseAuthException catch (e) {
-                if (e.code == 'user-not-found') {
-                  print('User not found');
-                } else if (e.code == 'wrong-password') {
-                  print('Wrong password');
+            TextField(
+              controller: _email,
+              enableSuggestions: false,
+              autocorrect: false,
+              keyboardType: TextInputType.emailAddress,
+              decoration: const InputDecoration(
+                hintText: 'Enter your email here',
+              ),
+            ),
+            TextField(
+              controller: _password,
+              obscureText: true,
+              enableSuggestions: false,
+              autocorrect: false,
+              decoration: const InputDecoration(
+                hintText: 'Enter your password here',
+              ),
+            ),
+            const SizedBox(
+              height: 30,
+            ),
+            TextButton(
+              onPressed: () async {
+                final email = _email.text;
+                final password = _password.text;
+                try {
+                  await FirebaseAuth.instance.signInWithEmailAndPassword(
+                    email: email,
+                    password: password,
+                  );
+                  Navigator.of(context)
+                      .pushNamedAndRemoveUntil('/notes/', (route) => false);
+                } on FirebaseAuthException catch (e) {
+                  if (e.code == 'user-not-found') {
+                    devtools.log('User not found');
+                  } else if (e.code == 'wrong-password') {
+                    devtools.log('Wrong password');
+                  }
                 }
-              }
-            },
-            child: const Text(
-              'Login',
-              style: TextStyle(
-                fontSize: 25,
-                color: Colors.white,
+              },
+              child: const Text(
+                'Login',
+                style: TextStyle(
+                  fontSize: 25,
+                  color: Colors.grey,
+                ),
               ),
             ),
-          ),
-          TextButton(
-            onPressed: () {
-              Navigator.of(context).pushNamedAndRemoveUntil(
-                '/register/',
-                (route) => false,
-              );
-            },
-            child: const Text(
-              'Not registered yet? Register here!',
-              style: TextStyle(
-                fontSize: 23,
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pushNamedAndRemoveUntil(
+                  '/register/',
+                  (route) => false,
+                );
+              },
+              child: const Text(
+                'Sign Up',
+                style: TextStyle(
+                  fontSize: 23,
+                  color: Colors.grey,
+                ),
               ),
-            ),
-          )
-        ],
+            )
+          ],
+        ),
       ),
     );
   }

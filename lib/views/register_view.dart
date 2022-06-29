@@ -1,4 +1,4 @@
-import 'dart:developer' as devtools show log;
+// ignore_for_file: use_build_context_synchronously
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';

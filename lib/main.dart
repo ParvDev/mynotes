@@ -22,7 +22,7 @@ class MyNotes extends StatelessWidget {
       title: 'My Notes',
       theme: ThemeData(
         brightness: Brightness.dark,
-        primarySwatch: Colors.teal,
+        primarySwatch: Colors.cyan,
       ),
       home: const HomePage(),
       routes: {

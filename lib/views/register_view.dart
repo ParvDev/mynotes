@@ -35,7 +35,10 @@ class _RegisterViewState extends State<RegisterView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: const Color.fromARGB(255, 9, 83, 96),
       appBar: AppBar(
+        elevation: 0.0,
+        backgroundColor: const Color.fromARGB(255, 9, 83, 96),
         title: const Text('Sign Up'),
         leading: IconButton(
           icon: const Icon(CupertinoIcons.left_chevron),
@@ -52,7 +55,6 @@ class _RegisterViewState extends State<RegisterView> {
             const Icon(
               Icons.app_registration_rounded,
               size: 300,
-              color: Colors.grey,
             ),
             const SizedBox(
               height: 20.0,
@@ -64,6 +66,7 @@ class _RegisterViewState extends State<RegisterView> {
               keyboardType: TextInputType.emailAddress,
               decoration: const InputDecoration(
                 hintText: 'Enter your email here',
+                icon: Icon(Icons.email),
               ),
             ),
             TextField(
@@ -72,8 +75,8 @@ class _RegisterViewState extends State<RegisterView> {
               enableSuggestions: false,
               autocorrect: false,
               decoration: const InputDecoration(
-                hintText: 'Enter your password here',
-              ),
+                  hintText: 'Enter your password here',
+                  icon: Icon(Icons.password)),
             ),
             const SizedBox(
               height: 20.0,
@@ -115,7 +118,7 @@ class _RegisterViewState extends State<RegisterView> {
               child: const Text(
                 'Sign Up',
                 style: TextStyle(
-                  color: Colors.grey,
+                  color: Colors.white,
                   fontSize: 25,
                 ),
               ),
@@ -128,10 +131,10 @@ class _RegisterViewState extends State<RegisterView> {
                 );
               },
               child: const Text(
-                'Already have an account? Login',
+                'Login',
                 style: TextStyle(
                   fontSize: 25,
-                  color: Colors.grey,
+                  color: Colors.white,
                 ),
               ),
             )

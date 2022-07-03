@@ -34,7 +34,10 @@ class _LoginViewState extends State<LoginView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: const Color.fromARGB(255, 24, 48, 55),
       appBar: AppBar(
+        elevation: 0.0,
+        backgroundColor: const Color.fromARGB(255, 24, 48, 55),
         title: const Text('Login'),
       ),
       body: Padding(
@@ -56,6 +59,7 @@ class _LoginViewState extends State<LoginView> {
               keyboardType: TextInputType.emailAddress,
               decoration: const InputDecoration(
                 hintText: 'Enter your email here',
+                icon: Icon(Icons.email),
               ),
             ),
             TextField(
@@ -65,6 +69,7 @@ class _LoginViewState extends State<LoginView> {
               autocorrect: false,
               decoration: const InputDecoration(
                 hintText: 'Enter your password here',
+                icon: Icon(Icons.password),
               ),
             ),
             const SizedBox(
@@ -108,7 +113,7 @@ class _LoginViewState extends State<LoginView> {
                 'Login',
                 style: TextStyle(
                   fontSize: 25,
-                  color: Colors.grey,
+                  color: Colors.white,
                 ),
               ),
             ),
@@ -123,10 +128,10 @@ class _LoginViewState extends State<LoginView> {
                 'Sign Up',
                 style: TextStyle(
                   fontSize: 23,
-                  color: Colors.grey,
+                  color: Colors.white,
                 ),
               ),
-            )
+            ),
           ],
         ),
       ),

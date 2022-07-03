@@ -215,6 +215,7 @@ class NotesService {
   Future<void> _ensureDbIsOpen() async {
     try {
       await open();
+      // ignore: empty_catches
     } on DatabaseAlreadyOpenException {}
   }
 

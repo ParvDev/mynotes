@@ -75,63 +75,75 @@ class _LoginViewState extends State<LoginView> {
             const SizedBox(
               height: 30,
             ),
-            TextButton(
-              onPressed: () async {
-                final email = _email.text;
-                final password = _password.text;
-                try {
-                  await AuthService.firebase().logIn(
-                    email: email,
-                    password: password,
-                  );
-                  final user = AuthService.firebase().currentUser;
-                  if (user?.isEmailVerified ?? false) {
-                    Navigator.of(context)
-                        .pushNamedAndRemoveUntil(notesRoute, (route) => false);
-                  } else {
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                ElevatedButton(
+                  onPressed: () async {
+                    final email = _email.text;
+                    final password = _password.text;
+                    try {
+                      await AuthService.firebase().logIn(
+                        email: email,
+                        password: password,
+                      );
+                      final user = AuthService.firebase().currentUser;
+                      if (user?.isEmailVerified ?? false) {
+                        Navigator.of(context).pushNamedAndRemoveUntil(
+                            notesRoute, (route) => false);
+                      } else {
+                        Navigator.of(context).pushNamedAndRemoveUntil(
+                            verifyEmailRoute, (route) => false);
+                      }
+                    } on UserNotFoundAuthException {
+                      await showErrorDialog(
+                        context,
+                        'User not found',
+                      );
+                    } on WrongPasswordAuthException {
+                      await showErrorDialog(
+                        context,
+                        "Invalid Password",
+                      );
+                    } on GenericAuthException {
+                      await showErrorDialog(
+                        context,
+                        'Authentication error',
+                      );
+                    }
+                  },
+                  child: const Text(
+                    'Login',
+                    style: TextStyle(
+                      fontSize: 25,
+                      color: Colors.white,
+                    ),
+                  ),
+                ),
+                const SizedBox(
+                  width: 15,
+                ),
+                TextButton(
+                  onPressed: () {
                     Navigator.of(context).pushNamedAndRemoveUntil(
-                        verifyEmailRoute, (route) => false);
-                  }
-                } on UserNotFoundAuthException {
-                  await showErrorDialog(
-                    context,
-                    'User not found',
-                  );
-                } on WrongPasswordAuthException {
-                  await showErrorDialog(
-                    context,
-                    "Invalid Password",
-                  );
-                } on GenericAuthException {
-                  await showErrorDialog(
-                    context,
-                    'Authentication error',
-                  );
-                }
-              },
-              child: const Text(
-                'Login',
-                style: TextStyle(
-                  fontSize: 25,
-                  color: Colors.white,
-                ),
-              ),
+                      registerRoute,
+                      (route) => false,
+                    );
+                  },
+                  child: const Text(
+                    'Sign Up',
+                    style: TextStyle(
+                      fontSize: 25,
+                      color: Colors.white,
+                    ),
+                  ),
+                )
+              ],
             ),
-            TextButton(
-              onPressed: () {
-                Navigator.of(context).pushNamedAndRemoveUntil(
-                  registerRoute,
-                  (route) => false,
-                );
-              },
-              child: const Text(
-                'Sign Up',
-                style: TextStyle(
-                  fontSize: 23,
-                  color: Colors.white,
-                ),
-              ),
+            const SizedBox(
+              height: 10,
             ),
+            const Divider()
           ],
         ),
       ),

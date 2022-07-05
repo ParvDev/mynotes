@@ -30,7 +30,7 @@ class MyNotes extends StatelessWidget {
         registerRoute: (context) => const RegisterView(),
         notesRoute: (context) => const NotesView(),
         verifyEmailRoute: (context) => const VerifyEmailView(),
-        createOrUpdateNoteRoute: (context) => const CreateOrGetExistingNote(),
+        createOrUpdateNoteRoute: (context) => const CreateOrGetExistingNote()
       },
     );
   }

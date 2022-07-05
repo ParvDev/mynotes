@@ -38,7 +38,14 @@ class _LoginViewState extends State<LoginView> {
       appBar: AppBar(
         elevation: 0.0,
         backgroundColor: const Color.fromARGB(255, 24, 48, 55),
-        title: const Text('Login'),
+        title: const Center(
+          child: Text(
+            'Login',
+            style: TextStyle(
+              fontSize: 25,
+            ),
+          ),
+        ),
       ),
       body: Padding(
         padding: const EdgeInsets.all(20.0),
@@ -143,7 +150,7 @@ class _LoginViewState extends State<LoginView> {
             const SizedBox(
               height: 10,
             ),
-            const Divider()
+            // const Divider()
           ],
         ),
       ),

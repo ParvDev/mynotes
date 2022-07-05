@@ -35,13 +35,17 @@ class _RegisterViewState extends State<RegisterView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color.fromARGB(255, 9, 83, 96),
+      backgroundColor: const Color.fromARGB(255, 12, 42, 52),
       appBar: AppBar(
         elevation: 0.0,
-        backgroundColor: const Color.fromARGB(255, 9, 83, 96),
-        title: const Text('Sign Up'),
+        backgroundColor: const Color.fromARGB(255, 12, 42, 52),
+        title: const Text(
+          'Sign Up',
+        ),
         leading: IconButton(
-          icon: const Icon(CupertinoIcons.left_chevron),
+          icon: const Icon(
+            CupertinoIcons.left_chevron,
+          ),
           onPressed: () {
             Navigator.of(context)
                 .pushNamedAndRemoveUntil(loginRoute, (route) => false);
@@ -55,6 +59,7 @@ class _RegisterViewState extends State<RegisterView> {
             const Icon(
               Icons.app_registration_rounded,
               size: 300,
+              color: Colors.grey,
             ),
             const SizedBox(
               height: 20.0,
@@ -81,63 +86,71 @@ class _RegisterViewState extends State<RegisterView> {
             const SizedBox(
               height: 20.0,
             ),
-            TextButton(
-              onPressed: () async {
-                final email = _email.text;
-                final password = _password.text;
-                try {
-                  await AuthService.firebase().createUser(
-                    email: email,
-                    password: password,
-                  );
-                  AuthService.firebase().currentUser;
-                  AuthService.firebase().sendEmailVerification();
-                  Navigator.of(context).pushNamed(verifyEmailRoute);
-                } on WeakPasswordAuthException {
-                  await showErrorDialog(
-                    context,
-                    'Weak password!',
-                  );
-                } on EmailAlreadyInUseAuthException {
-                  await showErrorDialog(
-                    context,
-                    "User already exist!",
-                  );
-                } on InvalidEmailAuthException {
-                  await showErrorDialog(
-                    context,
-                    "Invalid Email address",
-                  );
-                } on GenericAuthException {
-                  await showErrorDialog(
-                    context,
-                    'Failed to register :(',
-                  );
-                }
-              },
-              child: const Text(
-                'Sign Up',
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 25,
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                ElevatedButton(
+                  onPressed: () async {
+                    final email = _email.text;
+                    final password = _password.text;
+                    try {
+                      await AuthService.firebase().createUser(
+                        email: email,
+                        password: password,
+                      );
+                      AuthService.firebase().currentUser;
+                      AuthService.firebase().sendEmailVerification();
+                      Navigator.of(context).pushNamed(verifyEmailRoute);
+                    } on WeakPasswordAuthException {
+                      await showErrorDialog(
+                        context,
+                        'Weak password!',
+                      );
+                    } on EmailAlreadyInUseAuthException {
+                      await showErrorDialog(
+                        context,
+                        "User already exist!",
+                      );
+                    } on InvalidEmailAuthException {
+                      await showErrorDialog(
+                        context,
+                        "Invalid Email address",
+                      );
+                    } on GenericAuthException {
+                      await showErrorDialog(
+                        context,
+                        'Failed to register :(',
+                      );
+                    }
+                  },
+                  child: const Text(
+                    'Sign Up',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 25,
+                    ),
+                  ),
                 ),
-              ),
+                const SizedBox(
+                  width: 15,
+                ),
+                TextButton(
+                  onPressed: () {
+                    Navigator.of(context).pushNamedAndRemoveUntil(
+                      loginRoute,
+                      (route) => false,
+                    );
+                  },
+                  child: const Text(
+                    'Login',
+                    style: TextStyle(
+                      fontSize: 25,
+                      color: Colors.white,
+                    ),
+                  ),
+                )
+              ],
             ),
-            TextButton(
-              onPressed: () {
-                Navigator.of(context).pushNamedAndRemoveUntil(
-                  loginRoute,
-                  (route) => false,
-                );
-              },
-              child: const Text(
-                'Login',
-                style: TextStyle(
-                  fontSize: 25,
-                  color: Colors.white,
-                ),
-              ),
-            )
           ],
         ),
       ),

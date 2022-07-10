@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:mynotes/services/auth/auth_service.dart';
-import 'package:mynotes/services/crud/notes_service.dart';
 import 'package:mynotes/utilities/generics/get_arguments.dart';
+import 'package:mynotes/services/cloud/cloud_note.dart';
+import 'package:mynotes/services/cloud/firebase_cloud_storage.dart';
 
 class CreateOrGetExistingNote extends StatefulWidget {
   const CreateOrGetExistingNote({Key? key}) : super(key: key);
@@ -12,12 +13,12 @@ class CreateOrGetExistingNote extends StatefulWidget {
 }
 
 class _CreateOrGetExistingNoteState extends State<CreateOrGetExistingNote> {
-  late final NotesService _notesService;
+  late final FirebaseCloudStorage _notesService;
   late final TextEditingController _textController;
-  DatabaseNotes? _note;
+  CLoudNote? _note;
 
-  Future<DatabaseNotes> createOrGetExistingNotes(BuildContext context) async {
-    final widgetNote = context.getArgument<DatabaseNotes>();
+  Future<CLoudNote> createOrGetExistingNotes(BuildContext context) async {
+    final widgetNote = context.getArgument<CLoudNote>();
 
     if (widgetNote != null) {
       _note = widgetNote;
@@ -30,9 +31,8 @@ class _CreateOrGetExistingNoteState extends State<CreateOrGetExistingNote> {
       return existingNote;
     }
     final currentUser = AuthService.firebase().currentUser!;
-    final email = currentUser.email;
-    final owner = await _notesService.getUser(email: email);
-    final newNote = await _notesService.createNotes(owner: owner);
+    final userId = currentUser.id;
+    final newNote = await _notesService.createNewNotes(ownerUserId: userId);
     _note = newNote;
     return newNote;
   }
@@ -40,7 +40,7 @@ class _CreateOrGetExistingNoteState extends State<CreateOrGetExistingNote> {
   void _deleteNoteIfTextIsEmpty() {
     final note = _note;
     if (_textController.text.isEmpty && note != null) {
-      _notesService.deleteNote(id: note.id);
+      _notesService.deleteNote(documanetId: note.documentId);
     }
   }
 
@@ -48,10 +48,7 @@ class _CreateOrGetExistingNoteState extends State<CreateOrGetExistingNote> {
     final note = _note;
     final text = _textController.text;
     if (text.isNotEmpty && note != null) {
-      await _notesService.updateNotes(
-        note: note,
-        text: text,
-      );
+      await _notesService.updateNote(documanetId: note.documentId, text: text);
     }
   }
 
@@ -61,8 +58,8 @@ class _CreateOrGetExistingNoteState extends State<CreateOrGetExistingNote> {
       return;
     }
     final text = _textController.text;
-    await _notesService.updateNotes(
-      note: note,
+    await _notesService.updateNote(
+      documanetId: note.documentId,
       text: text,
     );
   }
@@ -74,7 +71,7 @@ class _CreateOrGetExistingNoteState extends State<CreateOrGetExistingNote> {
 
   @override
   void initState() {
-    _notesService = NotesService();
+    _notesService = FirebaseCloudStorage();
     _textController = TextEditingController();
     super.initState();
   }

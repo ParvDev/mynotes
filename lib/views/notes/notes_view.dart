@@ -27,10 +27,9 @@ class _NotesViewState extends State<NotesView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color.fromARGB(255, 85, 99, 104),
+      backgroundColor: const Color.fromARGB(255, 32, 31, 32),
       appBar: AppBar(
-        elevation: 0.0,
-        backgroundColor: const Color.fromARGB(255, 85, 99, 104),
+        backgroundColor: const Color.fromARGB(255, 32, 31, 32),
         title: const Text(
           'Your notes',
         ),

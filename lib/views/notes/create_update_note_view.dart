@@ -89,10 +89,9 @@ class _CreateOrGetExistingNoteState extends State<CreateOrGetExistingNote> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color.fromARGB(255, 48, 62, 70),
+      backgroundColor: const Color.fromARGB(255, 32, 31, 32),
       appBar: AppBar(
-        elevation: 0.0,
-        backgroundColor: const Color.fromARGB(255, 48, 62, 70),
+        backgroundColor: const Color.fromARGB(255, 32, 31, 32),
         title: const Text('New note'),
         actions: [
           IconButton(
